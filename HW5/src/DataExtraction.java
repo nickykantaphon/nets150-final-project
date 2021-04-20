@@ -15,7 +15,7 @@ public class DataExtraction {
      * Index 0 of nodesString contains the name of vertex of index 0 in adjMatrix. Index 0 of 
      * nodesType contains a type of a vertex: "n" (name), "t" (team), "h" (home town), "c" (college).
      */
-    // List of vertices in the matrix
+    // List of all vertices in the matrix
     private List<String> nodesString;
     // List of the type of vertices in the matrix: 
     private List<String> nodesType;
