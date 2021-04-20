@@ -1,0 +1,168 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.jsoup.select.Elements;
+
+public class DataExtraction {
+    
+    // List of player objects scraped from ESPN
+    private List<Player> playerList;
+    
+    /**
+     * The index of three data structures below is correspondent with one another. For example: 
+     * Index 0 of nodesString contains the name of vertex of index 0 in adjMatrix. Index 0 of 
+     * nodesType contains a type of a vertex: "n" (name), "t" (team), "h" (home town), "c" (college).
+     */
+    // List of vertices in the matrix
+    private List<String> nodesString;
+    // List of the type of vertices in the matrix: 
+    private List<String> nodesType;
+    // Adjacency Matrix
+    private int[][] adjMatrix;
+    
+    public DataExtraction() {        
+        playerList = new LinkedList<Player>();
+        nodesString = new LinkedList<String>();
+        nodesType = new LinkedList<String>();
+        
+        // Scrape ESPN for data
+        ESPNParser pageparse = new ESPNParser("https://www.espn.com/nba/teams");
+        List<String> teamURLList = pageparse.getRosterList();
+        List<String> allPlayerLinks = new LinkedList<String>();
+        for (String e : teamURLList) {
+            ESPNParser teamparser = new ESPNParser(e);
+            teamparser.getLinks();
+            Map<String,String> linkMap = teamparser.getMap();
+            for (Map.Entry<String,String> entry : linkMap.entrySet() ) {
+                if (entry.getValue().contains("/player/") && !entry.getKey().equals("")) {
+                    String s = entry.getValue();
+                    String[] arr = s.split("/");
+                    String[] newArr = new String[arr.length+1];
+                    for (int i = 0; i < 5; i++) {
+                        newArr[i] = arr[i];
+                    }
+                    newArr[5] = "bio";
+                    for (int i = 5; i < arr.length; i++) {
+                        newArr[i+1] = arr[i];
+                    }
+                    String newStr = "";
+                    for (int i = 0; i < newArr.length; i++) {
+                        newStr = newStr + newArr[i] + "/";
+                    }
+                    newStr = newStr.substring(0,newStr.length()-1);
+                    allPlayerLinks.add(newStr);
+                    ESPNParser playerparse = new ESPNParser(newStr);
+                    Elements es = playerparse.getDoc().select("div[class=Wrapper Card__Content] "
+                            + "span[class=dib flex-uniform mr3 clr-gray-01], "
+                            + "div[class=Wrapper Card__Content] "
+                            + "span[class=Bio__Label ttu mr2 dib clr-gray-04]");
+             
+                    
+                    Map<String, String> playerMap = new HashMap <String,String>();
+                    for (int i = 0; i < es.size(); i+=2) {
+                        playerMap.put(es.get(i).text(), es.get(i+1).text());
+                    }
+                    
+                    String t = playerMap.get("Team");
+                    // add to node list
+                    if (t != null && !nodesString.contains(t)) {
+                        nodesString.add(t);
+                        nodesType.add("t");
+                    }
+                    
+                    String h;
+                    if (playerMap.containsKey("Birthplace")) {
+                        h = playerMap.get("Birthplace");
+                    } else {
+                        h = null;
+                    }
+                    // add to node list
+                    if (h != null && !nodesString.contains(h)) {
+                        nodesString.add(h);
+                        nodesType.add("h");
+                    }
+                    
+                    String c;
+                    if (playerMap.containsKey("College")) {
+                        c = playerMap.get("College");
+                    } else {
+                        c = null;
+                    }
+                    // add to node list
+                    if (c != null && !nodesString.contains(c)) {
+                        nodesString.add(c);
+                        nodesType.add("c");
+                    }
+                    
+                    String firstName = playerparse.getDoc().select("span["
+                            + "class=truncate min-w-0 fw-light]").text();
+                    String lastName = playerparse.getDoc().select("span"
+                            + "[class=truncate min-w-0]").text();
+                    String n = firstName + " " + lastName;
+                    if (!n.equals(null) && !nodesString.contains(n)) {
+                        nodesString.add(n);
+                        nodesType.add("n");
+                    }
+                    
+                    Player player = new Player(n,t,h,c);
+                    playerList.add(player);
+                    System.out.println("Name: " + n);
+                    System.out.println("Team: " + t);
+                    System.out.println("Hometown: " + h);
+                    System.out.println("College: " + c);
+                    System.out.println();
+                }               
+            }                     
+        }
+        
+        // Create an adjacency matrix
+        adjMatrix = new int[nodesString.size()][nodesString.size()];
+        for (int i = 0; i < playerList.size(); i++) {
+            Player pl = playerList.get(i);
+            String n = pl.getName();
+            String t = pl.getTeam();
+            String h = pl.getHometown();
+            String c = pl.getCollege();
+            
+            if (n != null && t != null) {
+                adjMatrix[nodesString.indexOf(n)][nodesString.indexOf(t)] = 1;
+                adjMatrix[nodesString.indexOf(t)][nodesString.indexOf(n)] = 1;
+//                System.out.println(n + "-" + t);
+            }     
+            if (n != null && h != null) {
+                adjMatrix[nodesString.indexOf(n)][nodesString.indexOf(h)] = 1;
+                adjMatrix[nodesString.indexOf(h)][nodesString.indexOf(n)] = 1;
+//                System.out.println(n + "-" + h);
+            }  
+            if (n != null && c != null) {
+                adjMatrix[nodesString.indexOf(n)][nodesString.indexOf(c)] = 1;
+                adjMatrix[nodesString.indexOf(c)][nodesString.indexOf(n)] = 1;
+//                System.out.println(n + "-" + c);
+            }                 
+        }
+        
+        System.out.println("Data Extraction Completed.");
+    
+    }
+    
+    public List<Player> getPlayers() {
+        return playerList;
+    }
+    
+    public List<String> getNodeList() {
+        return nodesString;
+    }
+    
+    public List<String> getNodeType() {
+        return nodesType;
+    }
+    
+    public int[][] getAdjMatrix() {
+        return adjMatrix;
+    }
+    
+    
+
+}
