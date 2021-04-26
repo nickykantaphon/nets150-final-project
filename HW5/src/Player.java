@@ -7,7 +7,7 @@ public class Player {
     public Player(String n, String t, String h, String c) {
         name = n;
         team = t;
-        hometown = h;
+        hometown = h; 
         college = c;
     }
     

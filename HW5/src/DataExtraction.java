@@ -28,7 +28,7 @@ public class DataExtraction {
         playerList = new LinkedList<Player>();
         nodesString = new LinkedList<String>();
         nodesType = new LinkedList<String>();
-        
+         
         // Scrapes ESPN for data
         ESPNParser pageparse = new ESPNParser("https://www.espn.com/nba/teams");
         List<String> teamURLList = pageparse.getRosterList();
