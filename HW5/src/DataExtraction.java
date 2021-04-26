@@ -29,7 +29,7 @@ public class DataExtraction {
         nodesString = new LinkedList<String>();
         nodesType = new LinkedList<String>();
         
-        // Scrape ESPN for data
+        // Scrapes ESPN for data
         ESPNParser pageparse = new ESPNParser("https://www.espn.com/nba/teams");
         List<String> teamURLList = pageparse.getRosterList();
         List<String> allPlayerLinks = new LinkedList<String>();
@@ -216,8 +216,5 @@ public class DataExtraction {
             }
         }
         return true;       
-    }
-
-    
-
+    }  
 }

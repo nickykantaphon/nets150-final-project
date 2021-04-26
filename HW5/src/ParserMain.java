@@ -32,14 +32,16 @@ public class ParserMain {
         load();
                 
         // Examples
-        int indexOfCurry = nodeList.indexOf("Stephen Curry");
-        System.out.println("Stephen Curry has index of " + indexOfCurry);
+        String player = "Sephen Curry";
+        
+        int indexOfCurry = nodeList.indexOf(player);
+        System.out.println(player + " has index of " + indexOfCurry);
         // Find his team
         String CurryTeam = "";
         for (int i = 0; i < adjMatrix[indexOfCurry].length; i++) {
             if (adjMatrix[indexOfCurry][i] == 1 && nodeType.get(i).equals("t")) {
                 CurryTeam = nodeList.get(i);
-                System.out.println("Stephen Curry plays for " + nodeList.get(i));
+                System.out.println(player + " plays for " + nodeList.get(i));
             }
         }
         // Find all his teammates in the team
@@ -51,12 +53,10 @@ public class ParserMain {
                 System.out.println(nodeList.get(i));
             }
         }
-        
-        
     }
     
     static void load() {
-        File file = Paths.get("data.txt").toFile();
+        File file = Paths.get("HW5/data.txt").toFile();
         BufferedReader br = null; 
         
         try {
@@ -118,7 +118,4 @@ public class ParserMain {
             }
         }        
     }
-
 }
-
-

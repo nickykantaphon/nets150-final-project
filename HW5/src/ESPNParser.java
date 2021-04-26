@@ -70,7 +70,6 @@ public class ESPNParser {
             String linkTitle = link.text();
             if (linkTitle.equals("Roster")) {
                 rosterLinkList.add(linkURL);
-//                System.out.println(linkURL);
             }
         }
     }
@@ -95,5 +94,4 @@ public class ESPNParser {
     public Document getDoc() {
         return doc;
     }
-
 }
