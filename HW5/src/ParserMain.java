@@ -66,7 +66,6 @@ public class ParserMain {
             String strSize = br.readLine();
             int size = Integer.parseInt(strSize);
             adjMatrix = new int[size][size];
-            System.out.println(size);
                  
             // load game board 
             for (int row = 0; row < adjMatrix.length; row++) {
