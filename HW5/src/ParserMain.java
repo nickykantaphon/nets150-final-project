@@ -32,7 +32,7 @@ public class ParserMain {
         load();
                 
         // Examples
-        String player = "Sephen Curry";
+        String player = "Stephen Curry";
         
         int indexOfCurry = nodeList.indexOf(player);
         System.out.println(player + " has index of " + indexOfCurry);
