@@ -1,3 +1,5 @@
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -108,15 +110,15 @@ public class DataExtraction {
                     
                     Player player = new Player(n,t,h,c);
                     playerList.add(player);
-                    System.out.println("Name: " + n);
-                    System.out.println("Team: " + t);
-                    System.out.println("Hometown: " + h);
-                    System.out.println("College: " + c);
-                    System.out.println();
+//                    System.out.println("Name: " + n);
+//                    System.out.println("Team: " + t);
+//                    System.out.println("Hometown: " + h);
+//                    System.out.println("College: " + c);
+//                    System.out.println();
                 }               
             }                     
         }
-        
+                
         // Create an adjacency matrix
         adjMatrix = new int[nodesString.size()][nodesString.size()];
         for (int i = 0; i < playerList.size(); i++) {
@@ -144,6 +146,8 @@ public class DataExtraction {
         }
         
         System.out.println("Data Extraction Completed.");
+        
+        this.save();
     
     }
     
@@ -163,6 +167,57 @@ public class DataExtraction {
         return adjMatrix;
     }
     
+    
+    boolean save() {
+        File file = Paths.get("data.txt").toFile();
+        BufferedWriter bw = null;
+        
+        try {
+            FileWriter fw = new FileWriter(file);
+            bw = new BufferedWriter(fw);
+            
+            bw.write(String.valueOf(adjMatrix.length));
+            bw.newLine();
+            
+            // save matrix
+            for (int row = 0; row < adjMatrix.length; row++) {
+                for (int col = 0; col < adjMatrix[row].length; col++) {
+                    bw.write("" + adjMatrix[row][col]);
+                }
+                bw.newLine();
+            }
+            
+            // save player list
+            for (Player p : playerList) {
+                bw.write(p.getName() + "/");
+                bw.write(p.getTeam() + "/");
+                bw.write(p.getHometown() + "/");
+                bw.write(p.getCollege() + "/");
+            }
+            bw.newLine();
+            
+            // save node list
+            for (String s : nodesString) {
+                bw.write(s + "/");
+            }
+            bw.newLine();
+            
+            // save node type
+            for (String s : nodesType) {
+                bw.write(s + "/");
+            }               
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        return true;       
+    }
+
     
 
 }
