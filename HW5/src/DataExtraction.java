@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 public class DataExtraction {
     
     // List of player objects scraped from ESPN
-    private List<Player> playerList;
+    private static List<Player> playerList = new LinkedList<Player>();
     
     /**
      * The index of three data structures below is correspondent with one another. For example: 
@@ -18,17 +18,13 @@ public class DataExtraction {
      * nodesType contains a type of a vertex: "n" (name), "t" (team), "h" (home town), "c" (college).
      */
     // List of all vertices in the matrix
-    private List<String> nodesString;
+    private static List<String> nodesString = new LinkedList<String>();
     // List of the type of vertices in the matrix: 
-    private List<String> nodesType;
+    private static List<String> nodesType = new LinkedList<String>();
     // Adjacency Matrix
-    private int[][] adjMatrix;
-    
-    public DataExtraction() {        
-        playerList = new LinkedList<Player>();
-        nodesString = new LinkedList<String>();
-        nodesType = new LinkedList<String>();
-         
+    private static int[][] adjMatrix;
+
+    public static void scrape() {
         // Scrapes ESPN for data
         ESPNParser pageparse = new ESPNParser("https://www.espn.com/nba/teams");
         List<String> teamURLList = pageparse.getRosterList();
@@ -147,28 +143,91 @@ public class DataExtraction {
         
         System.out.println("Data Extraction Completed.");
         
-        this.save();
-    
+        save();
     }
     
-    public List<Player> getPlayers() {
+    public static List<Player> getPlayers() {
         return playerList;
     }
     
-    public List<String> getNodeList() {
+    public static List<String> getNodeList() {
         return nodesString;
     }
     
-    public List<String> getNodeType() {
+    public static List<String> getNodeType() {
         return nodesType;
     }
     
-    public int[][] getAdjMatrix() {
+    public static int[][] getAdjMatrix() {
         return adjMatrix;
     }
     
+    public static void load() {
+        File file = Paths.get("data.txt").toFile();
+        BufferedReader br = null; 
+        
+        try {
+            br = new BufferedReader(new FileReader(file));
+            
+            // get matrix size
+            String strSize = br.readLine();
+            int size = Integer.parseInt(strSize);
+            adjMatrix = new int[size][size];
+                 
+            // load game board 
+            for (int row = 0; row < adjMatrix.length; row++) {
+                for (int col = 0; col < adjMatrix[row].length; col++) {
+                    int val = br.read() - 48;
+                    adjMatrix[row][col] = val;
+                } 
+                br.read();
+            }
+
+            // load player list
+            String players = br.readLine();  
+
+            String[] playersSplit = players.split("/");
+            
+            for (int i = 0; i < playersSplit.length - 3; i += 4) {
+                String n = playersSplit[i];
+                String t = playersSplit[i + 1];
+                String h = playersSplit[i + 2];
+                String c = playersSplit[i + 3];
+                Player p = new Player(n, t, h, c);               
+                playerList.add(p);
+            }
+
+            // load node list
+            String nodes = br.readLine();
+            String[] nodesSplit = nodes.split("/");
+            
+            for (int i = 0; i < nodesSplit.length; i++) {
+                nodesString.add(nodesSplit[i]);
+            }
+            
+            // load node type
+            String type = br.readLine();
+            String[] typeSplit = type.split("/");
+            
+            for (int i = 0; i < typeSplit.length; i++) {
+                nodesType.add(typeSplit[i]);
+            }
+            
+        } catch (FileNotFoundException e) {
+            return;
+        } catch (IOException e) {
+            return;
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                return;
+            }
+        }        
     
-    boolean save() {
+    }
+    
+    private static boolean save() {
         File file = Paths.get("data.txt").toFile();
         BufferedWriter bw = null;
         
