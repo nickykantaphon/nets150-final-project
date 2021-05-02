@@ -5,7 +5,7 @@ public class Recommendation {
     /**
      * Prints out the recommendations for user based on college and/or hometown input (in ParserMain)
      * @param adjMatrix - adjacency matrix of graph
-     * @param nodeList list of node names
+     * @param nodeList list of node names 
      * @param nodeType list of node types
      * @param type - college or hometown (user input for recommendation)
      */
