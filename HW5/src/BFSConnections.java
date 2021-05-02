@@ -59,7 +59,7 @@ public class BFSConnections { // class
             if (p.equalsIgnoreCase(player)) {
                 return true;
             }
-        }
+        } 
         return false;
     }
     
