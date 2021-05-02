@@ -26,4 +26,14 @@ ParserMain - This is the main Class where users can interact with a graph by scr
 How to use the program?
 1. Run the program on Eclipse.
 2. The program will prompt you to enter '1', '2', or '3' based on the functions you want to explore.
+	2.1. Enter '1' to find smallest number of connections between two players.
+		- This is comparable to the Bacon numbers we explored in class.
+		- Any two players are connected/adjacent if they are currently in the same team, went to 
+		the same college, or have the same hometown.
+		- You will be prompted to type the name of two players that you want to see the degree
+		of separation or the smallest number of connections.
+		- The input is case insensitive. You don't have to worry about letter cases. For example,
+		"LeBron James", "Lebron James", or "lebron james" are all acceptable.
+	2.2. 
+
 			 
