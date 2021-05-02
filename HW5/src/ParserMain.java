@@ -3,18 +3,18 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class ParserMain { // class
-    
-//    static int[][] adjMatrix;
-//    static List<Player> playerList = new LinkedList<>();
-//    static List<String> nodeList = new LinkedList<>();
-//    static List<String> nodeType = new LinkedList<>();
+public class ParserMain {
     
     public static void main(String[] args) {
         
-        
-//        DataExtraction.scrape();
-        DataExtraction.load();
+        /*
+         * Comment out either one of the two lines below to switch 
+         * between scraping the data from the website (will take a long time)
+         * versus loading the data from a .txt file that contains the 
+         * same data (faster). 
+         */
+        DataExtraction.scrape();
+//        DataExtraction.load();
         
         // Adjacency matrix (1 = edge, 0 = no edge)
         int[][] adjMatrix = DataExtraction.getAdjMatrix();

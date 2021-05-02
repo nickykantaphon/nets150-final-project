@@ -106,11 +106,6 @@ public class DataExtraction {
                     
                     Player player = new Player(n,t,h,c);
                     playerList.add(player);
-//                    System.out.println("Name: " + n);
-//                    System.out.println("Team: " + t);
-//                    System.out.println("Hometown: " + h);
-//                    System.out.println("College: " + c);
-//                    System.out.println();
                 }               
             }                     
         }

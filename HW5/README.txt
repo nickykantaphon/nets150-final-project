@@ -11,7 +11,9 @@ DataExtraction - This class extracts data from ESPN by creating an object of ESP
 				 The data can also be loaded from an existing .txt file.
 				 
 BFSConnections - This class implements the functions needed to find the shortest number of
-				 links between two players using BFS. 
+				 links (i.e. shortest path) between two players using BFS. BFS is run from 
+				 one player, and then the path to the second player is found by backtracking
+				 the resulting BFS traversal.
 				 
 Recommendation - This class implements the functions needed for a user to find out which NBA 
 				 team would best match their input (hometown or college), based off of membership 
