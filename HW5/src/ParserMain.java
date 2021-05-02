@@ -58,6 +58,13 @@ public class ParserMain { // class
                 System.out.println("Enter name of second player: ");
                 String p2 = scanner.nextLine();
                 System.out.println();
+                
+                // if same player twice
+                if (p1.equalsIgnoreCase(p2)) {
+                    System.out.println("Please enter two different players!");
+                    break;
+                }
+                
                 BFSConnections.shortestPath(adjMatrix, nodeList, nodeType, p1, p2);
                 break;
                 
