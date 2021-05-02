@@ -32,21 +32,31 @@ public class ParserMain { // class
         List<String> nodeType = DataExtraction.getNodeType();
         
         
-        /* 
+        /* INSTRUCTIONS
+         * ------------
          * Please, follow the instructions displayed below and enter names/locations carefully! 
          * To test for different functions, please run the program again and input a different starting number.
          * (i.e.) To test for our BFS/shortest path implementation, press 1
-         * (i.e.) To test for our closure implementation, press 2
+         * (i.e.) To test for our closure implementation, press 2 or 3
          * (Note) Our classes (see README) for creating the graph are the backbones for these functions
          * (Note) The program may take a while to run the first time, as we are scraping large amounts of data. 
          * We apologise for that.
          * Thank you!   
          */
         
-         
+        
+        /* Extra note to user
+         * ------------
+         * Distinct case 2 and 3 for ease of use (please follow this strictly!) 
+         * Case 3 allows hometown to be less precise in search (i.e. if someone doesn't know the state abbreviation).
+         * Ultimately, this gives the user the benefit of the doubt and makes input easier for them, with the 
+         * added flexibility/functionality to search state-wide if interested (i.e. input "CA" rather than "[city], CA")  
+         */
+        
         // instructions
         System.out.println("Enter '1' to find smallest number of connections between two players.");
-        System.out.println("Enter '2' to find the recommended team based on your college or hometown.");
+        System.out.println("Enter '2' to find the recommended team based on your college.");
+        System.out.println("Enter '3' to find the recommended team based on your hometown.");
         Scanner scanner = new Scanner(System.in); // scanner for userinput
         String input = scanner.nextLine();
         
@@ -59,7 +69,7 @@ public class ParserMain { // class
                 String p2 = scanner.nextLine();
                 System.out.println();
                 
-                // if same player twice
+                // if same player
                 if (p1.equalsIgnoreCase(p2)) {
                     System.out.println("Please enter two different players!");
                     break;
@@ -69,14 +79,21 @@ public class ParserMain { // class
                 break;
                 
             case "2": 
-                System.out.println("Enter name of college or hometown: ");
-                String t = scanner.nextLine();
+                System.out.println("Enter name of college: ");
+                String c = scanner.nextLine();
                 System.out.println();
-                Recommendation.rec(adjMatrix, nodeList, nodeType, t);
+                Recommendation.rec(adjMatrix, nodeList, nodeType, c, "c");
+                break;
+                
+            case "3": 
+                System.out.println("Enter name of hometown: ");
+                String h = scanner.nextLine();
+                System.out.println();
+                Recommendation.rec(adjMatrix, nodeList, nodeType, h, "h");
                 break;
                 
             default:
-                System.out.println("Please enter a valid input (numbers 1 - 2).");
+                System.out.println("Please enter a valid input (numbers 1 - 3).");
                 break;
         }
         
