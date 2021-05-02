@@ -1,0 +1,28 @@
+Project name:
+
+
+
+Project description:
+The program scrapes data about NBA teams and players from the ESPN website. 
+In particular, each player's college and hometown is also recorded.
+Using this data, the program allows the user to: 1) find the smallest
+number of connections between two player (can be connected by same college, hometwon
+or team), 2) find a recommended team based on an input college and 3) find a
+recommended team based on an input hometown.
+
+Implementation project including the following concepts:
+- Document search
+- Graph and graph algorithms (adjacency matrix, BFS)
+- Social Affiliation Networks (focal closure, membership closure)
+
+
+Work breakdown:
+Arnav: 
+Recommendations based on the graph and user input
+
+Nicky:
+Web scraping (extracting data from ESPN)
+Constructing graph based on data
+
+Nicole:
+Shortest path between 2 players, BFS algorithm
