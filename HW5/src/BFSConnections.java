@@ -1,6 +1,6 @@
-import java.util.*;
+import java.util.*; // imports
 
-public class BFSConnections {
+public class BFSConnections { // class
     
     /**
      * Prints out the minimum number of links between two players and also
