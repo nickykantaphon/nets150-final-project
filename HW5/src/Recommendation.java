@@ -9,11 +9,11 @@ public class Recommendation {
      * @param nodeType list of node types
      * @param type - college or hometown (user input for recommendation)
      */
-    public static void rec(int[][] adjMatrix, List<String> nodeList, List<String> nodeType, String type) {    
-        if (getIndex(nodeList, type) != -1) {  // if exists in adjacency matrix (not = -1)
+    public static void rec(int[][] adjMatrix, List<String> nodeList, List<String> nodeType, String type, String ver) {    
+        if (getIndex(nodeList, type, ver) != -1) {  // if exists in adjacency matrix (not = -1)
             
             // use helper methods to initialize playerList and teamList
-            List<String> playerList = getPlayerList(adjMatrix, nodeList, getIndex(nodeList, type));
+            List<String> playerList = getPlayerList(adjMatrix, nodeList, getIndex(nodeList, type, ver));
             List<String> teamList = getMaxTeams(getTeamMap(adjMatrix, nodeList, nodeType, playerList));
             
             // header for output
@@ -38,13 +38,16 @@ public class Recommendation {
      * @param type - type input to get index of 
      * @return index of type input or -1 if not found (with message)
      */
-    private static int getIndex(List<String> nodeList, String type) {
-        int index = 0;
-        for (String t : nodeList) {
-            if (t.equalsIgnoreCase(type)) { // case insensitive (easier for user)
-                return index;
-            } else {
-                index++;
+    private static int getIndex(List<String> nodeList, String type, String ver) {
+        for (int i = 0; i < nodeList.size(); i++) { // case insensitive (easier for user)
+            if (ver.equals("c")) { // case if college 
+                if (nodeList.get(i).equalsIgnoreCase(type)) {
+                    return i;
+                } 
+            } else if (ver.equals("h")) { // case if hometown (easier for user)
+                if (nodeList.get(i).toLowerCase().contains(type.toLowerCase())) { // toLowerCase() makes it case insensitive
+                    return i;
+                }
             }
         }
         System.out.println("Invalid input. No players found from " + type + ".\n"); // if not found
