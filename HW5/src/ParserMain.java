@@ -1,8 +1,9 @@
+// imports
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class ParserMain {
+public class ParserMain { // class
     
 //    static int[][] adjMatrix;
 //    static List<Player> playerList = new LinkedList<>();
@@ -31,42 +32,47 @@ public class ParserMain {
         List<String> nodeType = DataExtraction.getNodeType();
         
         
-        Scanner scanner = new Scanner(System.in);
-        // add other functions
-        System.out.println("Enter '1' to find smallest number of connections between two players");
+        /* 
+         * Please, follow the instructions displayed below and enter names/locations carefully! 
+         * To test for different functions, please run the program again and input a different starting number.
+         * (i.e.) To test for our BFS/shortest path implementation, press 1
+         * (i.e.) To test for our closure implementation, press 2
+         * (Note) Our classes (see README) for creating the graph are the backbones for these functions
+         * (Note) The program may take a while to run the first time, as we are scraping large amounts of data. 
+         * We apologise for that.
+         * Thank you!   
+         */
+        
+         
+        // instructions
+        System.out.println("Enter '1' to find smallest number of connections between two players.");
+        System.out.println("Enter '2' to find the recommended team based on your college or hometown.");
+        Scanner scanner = new Scanner(System.in); // scanner for userinput
         String input = scanner.nextLine();
         
+        // different functions of program for user input (and grading)
         switch (input) {
             case "1":
-                System.out.println("Enter name of first player.");
+                System.out.println("Enter name of first player: ");
                 String p1 = scanner.nextLine();
-                System.out.println("Enter name of second player.");
+                System.out.println("Enter name of second player: ");
                 String p2 = scanner.nextLine();
+                System.out.println();
                 BFSConnections.shortestPath(adjMatrix, nodeList, nodeType, p1, p2);
+                break;
+                
+            case "2": 
+                System.out.println("Enter name of college or hometown: ");
+                String t = scanner.nextLine();
+                System.out.println();
+                Recommendation.rec(adjMatrix, nodeList, nodeType, t);
+                break;
+                
+            default:
+                System.out.println("Please enter a valid input (numbers 1 - 2).");
+                break;
         }
         
-                
-        // Examples
-//        String player = "Stephen Curry";
-//        
-//        int indexOfCurry = nodeList.indexOf(player);
-//        System.out.println(player + " has index of " + indexOfCurry);
-//        // Find his team
-//        String CurryTeam = "";
-//        for (int i = 0; i < adjMatrix[indexOfCurry].length; i++) {
-//            if (adjMatrix[indexOfCurry][i] == 1 && nodeType.get(i).equals("t")) {
-//                CurryTeam = nodeList.get(i);
-//                System.out.println(player + " plays for " + nodeList.get(i));
-//            }
-//        }
-//        // Find all his teammates in the team
-//        int indexOfCurryTeam = nodeList.indexOf(CurryTeam);
-//        System.out.println(CurryTeam + " has index of " + indexOfCurryTeam);
-//        System.out.println("His teammates: ");
-//        for (int i = 0; i < adjMatrix[indexOfCurryTeam].length; i++) {
-//            if (adjMatrix[indexOfCurryTeam][i] == 1 && nodeType.get(i).equals("n")) {
-//                System.out.println(nodeList.get(i));
-//            }
-//        }
+        scanner.close(); // close scanner
     }
 }
