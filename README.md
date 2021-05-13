@@ -1,4 +1,4 @@
-# nets150-final-project
+# NETS 150-Final-Project
 
 ## Project description:
 The program scrapes data about NBA teams and players from the ESPN website. In particular, each player's college and hometown is also recorded.
